@@ -1,0 +1,16 @@
+from azure.storage.blob import BlobServiceClient
+
+# Create a BlobServiceClient
+blob_service_client = BlobServiceClient.from_connection_string("<your_connection_string>")
+
+# Create a container
+container_name = "mycontainer"
+blob_service_client.create_container(container_name)
+
+# Upload a file
+with open("local_file.txt", "rb") as data:
+    blob_service_client.upload_blob(container_name, "s3_file.txt", data)
+
+# Download a file
+with open("downloaded_file.txt", "wb") as my_blob:
+    blob_service_client.download_blob(container_name, "s3_file.txt").readinto(my_blob)
